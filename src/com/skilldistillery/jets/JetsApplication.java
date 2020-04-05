@@ -34,21 +34,23 @@ public class JetsApplication {
 	public void launch() {
 		List<String[]> jetsInfo = parseJets();//parse jets has the input
 
-		af.getJets().add(new FighterJet(jetsInfo.get(0)[0], Double.parseDouble(jetsInfo.get(0)[1]),
-			Integer.parseInt(jetsInfo.get(0)[2]), Long.parseLong(jetsInfo.get(0)[3])));
-		
-		af.getJets().add(new FighterJet(jetsInfo.get(1)[0], Double.parseDouble(jetsInfo.get(1)[1]),
-			Integer.parseInt(jetsInfo.get(1)[2]), Long.parseLong(jetsInfo.get(1)[3])));
-		
-		af.getJets().add(new CargoPlane(jetsInfo.get(2)[0], Double.parseDouble(jetsInfo.get(2)[1]),
-			Integer.parseInt(jetsInfo.get(2)[2]), Long.parseLong(jetsInfo.get(2)[3])));
-		
-		af.getJets().add(new CargoPlane(jetsInfo.get(3)[0], Double.parseDouble(jetsInfo.get(3)[1]),
-			Integer.parseInt(jetsInfo.get(3)[2]), Long.parseLong(jetsInfo.get(3)[3])));
-		
-		af.getJets().add(new JetImpl(jetsInfo.get(4)[0], Double.parseDouble(jetsInfo.get(4)[1]),
-			Integer.parseInt(jetsInfo.get(4)[2]), Long.parseLong(jetsInfo.get(4)[3])));
-
+		for (int i= 0; i< jetsInfo.size(); i++ ) {
+			if(jetsInfo.get(i)[0].startsWith("Fighter")) {
+				af.getJets().add(new FighterJet(jetsInfo.get(0)[0], 
+						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(i)[2]), 
+						Long.parseLong(jetsInfo.get(i)[3])));
+			}
+			else if (jetsInfo.get(i)[0].startsWith("Cargo")){
+				af.getJets().add(new CargoPlane(jetsInfo.get(i)[0], 
+						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
+						Long.parseLong(jetsInfo.get(i)[3])));
+			}
+			else {
+				af.getJets().add(new JetImpl(jetsInfo.get(0)[0], 
+						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(i)[2]), 
+						Long.parseLong(jetsInfo.get(i)[3])));
+			}
+		}
 		
 		char choice = '0';
 		//MenuInteraction
@@ -112,35 +114,13 @@ public class JetsApplication {
 				System.out.println("Not a valid option\n\n");
 		}
 	}
-
-	/*
-	 * User Story 4 Part 1: Read the jets info from a text file.  
-	 */
-	public List<String[]> parseJets() {
-		//new list to hold String Arrays to input plane data into
-		List<String[]> jetsInfo = new ArrayList<>();
-
-		try(BufferedReader reader = new BufferedReader(new FileReader("jets.txt"))){
-			String jet;
-
-			while((jet = reader.readLine()) != null) {
-				String[] jetAttrs= jet.split(",");//separate by ',' create an array to hold data
-				jetsInfo.add(jetAttrs);//Add this array to the jetsInfo List
-			}
-
-		} catch (IOException e) {
-			System.err.println("Could not find file");//I hate seeing this
-		}
-
-		return jetsInfo;
-	}
-
+	
 	/*
 	 * User Story 5 print out fleets if more than 4 planes.
 	 */
 	public void listFleet() {
 		List<Jet> jets = af.getJets();
-	
+		
 		if(jets.size() > 4) {
 			for(Jet jet: jets) {
 				System.out.println(jet);			
@@ -150,6 +130,8 @@ public class JetsApplication {
 			System.out.println("Not enough planes");
 		}
 	}
+
+
 
 	/*
 	 * User Story 6- Fly All Jets
@@ -279,5 +261,26 @@ public class JetsApplication {
 			System.out.println("Invalid input");
 			scan.nextLine();
 		}
+	}
+	/*
+	 * User Story 4 Part 1: Read the jets info from a text file.  
+	 */
+	public List<String[]> parseJets() {
+		//new list to hold String Arrays to input plane data into
+		List<String[]> jetsInfo = new ArrayList<>();
+		
+		try(BufferedReader reader = new BufferedReader(new FileReader("jets.txt"))){
+			String jet;
+			
+			while((jet = reader.readLine()) != null) {
+				String[] jetAttrs= jet.split(",");//separate by ',' create an array to hold data
+				jetsInfo.add(jetAttrs);//Add this array to the jetsInfo List
+			}
+			
+		} catch (IOException e) {
+			System.err.println("Could not find file");//I hate seeing this
+		}
+		
+		return jetsInfo;
 	}
 }
