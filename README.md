@@ -1,6 +1,6 @@
-#Jets
+# Jets
 
-##About Jets
+## About Jets
 This is a program demonstrating the use of Lists of Object Oriented classes as Jets. On the program's launch, <u>File IO</u> will read in, from a local jets.txt file, and <i>populate an Airfield object with a fleet of jets</i> added to a <u>List</u>.  
 
 The user will have a 9 option menu: 
