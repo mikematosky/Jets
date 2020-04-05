@@ -7,11 +7,10 @@ public class FighterJet extends Jet implements CombatReady {
 	}
 
 	@Override
-	public void fight(boolean initiator) {
-		if (initiator){
-			System.out.println(this.model + " initiated a dogfight!");
-		} else {
-			System.out.println(this.model + " has entered the fight!");
-		}
+	/*
+	 * User Story 7 Part 2 DogFight
+	 */
+	public void fight() {
+		System.out.println(this.model + " started a dogfight!");
 	}
 }

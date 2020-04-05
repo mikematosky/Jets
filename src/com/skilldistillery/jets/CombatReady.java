@@ -1,5 +1,6 @@
 package com.skilldistillery.jets;
 
 public interface CombatReady {
-	public void fight(boolean a);
+	//Only Combat Ready Planes fight()
+	public void fight();
 }
