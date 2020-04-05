@@ -1,4 +1,4 @@
-  package com.skilldistillery.jets;
+package com.skilldistillery.jets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,10 @@ import java.util.List;
  * User Story 2: Airfield class holds an empty list of Jets
  */
 public class AirField {
+	
 	private List<Jet> jets;
 
+	
 	public AirField() {
 		jets = new ArrayList<>();
 	}
@@ -18,6 +20,6 @@ public class AirField {
 	}
 
 	public void setJets(List<Jet> _jets) {
-		jets = _jets;
+		jets = _jets; //Trying to avoid using this. as a crutch
 	}
 }

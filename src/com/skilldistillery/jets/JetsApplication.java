@@ -193,19 +193,22 @@ public class JetsApplication {
 	 * User Story 8 Part 2- DogFight!
 	 */
 	public void dogfight(){
-		boolean initialJet = true;
-		int combatants = 0;
+		//boolean initialJet = true;
+		int fighters = 0;// how many fighters
 		for(Jet jet : af.getJets()){
 			if(jet instanceof CombatReady){
-				((CombatReady) jet).fight(initialJet);
-				combatants ++;
-				initialJet = false;
+				((CombatReady) jet).fight();
+				fighters ++;
 			}
 		}
-		if (combatants == 1){
-			System.out.println("Looks like there are no other combatants...");
-		} else if (combatants == 0){
+		if (fighters == 1){
+			System.out.println("This is SPARTA!!!");
+		} 
+		else if (fighters == 0){
 			System.out.println("No jets with combat capability");
+		}
+		else {
+			System.out.println(fighters+ " fighters have entered the fight");
 		}
 	}
 
