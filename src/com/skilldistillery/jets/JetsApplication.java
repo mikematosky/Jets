@@ -10,19 +10,27 @@ import java.util.Scanner;
 
 public class JetsApplication {
 
-	AirField af;
-	Scanner scanner;
-
+	//General Global variables
+	public AirField af; //We need an airfield object
+	public Scanner scan = new Scanner(System.in);// scan for the program
+	
+	/*
+	 * User Story number1, Class with a main
+	 */
 	public static void main(String[] args) {
-		JetsApplication ja = new JetsApplication();
-		ja.launch();
+		JetsApplication jetApp = new JetsApplication();
+		jetApp.launch();
 	}
 
 	public JetsApplication() {
 		af = new AirField();
-		scanner = new Scanner(System.in);
 	}
 
+	/*
+	 * User Story 4 Part 2: Populate the local jetsInfo
+	 * 
+	 * TODO make this more flexible instead of hard coding.
+	 */
 	public void launch() {
 		List<String[]> jetsInfo = parseJets();
 
@@ -37,14 +45,22 @@ public class JetsApplication {
 		af.getJets().add(new JetImpl(jetsInfo.get(4)[0], Double.parseDouble(jetsInfo.get(4)[1]),
 			Integer.parseInt(jetsInfo.get(4)[2]), Long.parseLong(jetsInfo.get(4)[3])));
 
+		
 		char choice = '0';
+		//MenuInteraction
 		while(choice != '9'){
-			choice = dispayUserMenu();
+			choice = printMenu();
 			processChoice(choice);
 		}
 	}
 
-	public char dispayUserMenu() {
+	/*
+	 * Menu Chunk
+	 * 
+	 * -Print Menu
+	 * -Process Choices
+	 */
+	public char printMenu() {
 		System.out.println("\n1. List Fleet");
 		System.out.println("2. Fly all jets");
 		System.out.println("3. View fastest jet");
@@ -55,14 +71,14 @@ public class JetsApplication {
 		System.out.println("8. Remove a jet from Fleet");
 		System.out.println("9. Quit\n");
 		System.out.print("Choice: ");
-		return scanner.next().charAt(0);
+		return scan.next().charAt(0);
 	}
 
 	public void processChoice(char c){
 		switch(c){
 			case '1': listFleet();
 				break;
-			case '2': fly();
+			case '2': flyAll();
 				break;
 			case '3': viewFastestJet();
 				break;
@@ -76,45 +92,65 @@ public class JetsApplication {
 				break;
 			case '8': removeJet();
 				break;
-			case '9': scanner.close();
+			case '9': scan.close();
+				System.out.println("Goodbye!");
 				break;
 			default:
 				System.out.println("Not a valid option\n\n");
 		}
 	}
 
+	/*
+	 * User Story 4 Part 1: Read the jets info from a text file.  
+	 */
 	public List<String[]> parseJets() {
+		//new list to hold String Arrays to input plane data into
 		List<String[]> jetsInfo = new ArrayList<>();
 
-		try(BufferedReader br = new BufferedReader(new FileReader("jets.txt"))){
+		try(BufferedReader reader = new BufferedReader(new FileReader("jets.txt"))){
 			String jet;
 
-			while((jet = br.readLine()) != null) {
-				String[] jetAttrs= jet.split(",");
-				jetsInfo.add(jetAttrs);
+			while((jet = reader.readLine()) != null) {
+				String[] jetAttrs= jet.split(",");//separate by ',' create an array to hold data
+				jetsInfo.add(jetAttrs);//Add this array to the jetsInfo List
 			}
 
 		} catch (IOException e) {
-			System.err.println("Could not find file");
+			System.err.println("Could not find file");//I hate seeing this
 		}
 
 		return jetsInfo;
 	}
 
+	/*
+	 * User Story 5 print out fleets if more than 4 planes.
+	 */
 	public void listFleet() {
 		List<Jet> jets = af.getJets();
-		for(Jet jet: jets) {
-			System.out.println(jet);
+	
+		if(jets.size() > 4) {
+			for(Jet jet: jets) {
+				System.out.println(jet);			
+			}
+		}
+		else {
+			System.out.println("Not enough planes");
 		}
 	}
 
-	public void fly() {
+	/*
+	 * User Story 6- Fly All Jets
+	 */
+	public void flyAll() {
 		for(Jet jet : af.getJets()){
 			System.out.println(jet);
 			jet.fly();
 		}
 	}
 
+	/*
+	 * User Story 7 Part 1- Find Fastest Jet
+	 */
 	public void viewFastestJet() {
 		Jet fastest = null;
 		for(Jet jet: af.getJets()){
@@ -127,6 +163,9 @@ public class JetsApplication {
 		System.out.println("Fastest: " + fastest);
 	}
 
+	/*
+	 * User Story 7 Part 2- Find the Longest Lasting Jet
+	 */
 	public void viewLongestRange() {
 		Jet longestRange = null;
 		for(Jet jet: af.getJets()) {
@@ -139,6 +178,9 @@ public class JetsApplication {
 		System.out.println("Longest Range: " + longestRange);
 	}
 
+	/*
+	 * User Story 8 Part 1- LoadCargo
+	 */
 	public void loadAllCargo(){
 		for(Jet jet : af.getJets()){
 			if(jet instanceof CargoCarrier){
@@ -147,6 +189,9 @@ public class JetsApplication {
 		}
 	}
 
+	/*
+	 * User Story 8 Part 2- DogFight!
+	 */
 	public void dogfight(){
 		boolean initialJet = true;
 		int combatants = 0;
@@ -164,25 +209,37 @@ public class JetsApplication {
 		}
 	}
 
+	/*
+	 * User Story 9- Add a Jet
+	 * 
+	 * User adds a jet to the AirField with loaded constructor
+	 * 
+	 * TODO dummyproof Parse strings for actual planes
+	 */
 	public void addJet(){
 		try {
 			System.out.print("Enter the jet model: ");
-			String model = scanner.next();
+			String model = scan.next();
 			System.out.print("Enter the speed: ");
-			double speed = scanner.nextDouble();
+			double speed = scan.nextDouble();
 			System.out.print("Enter the range: ");
-			int range = scanner.nextInt();
+			int range = scan.nextInt();
 			System.out.print("Enter the price: ");
-			long price = scanner.nextLong();
+			long price = scan.nextLong();
 
 			af.getJets().add(new JetImpl(model, speed, range, price));
 			System.out.println("\nJet added\n");
 		} catch (InputMismatchException e){
 			System.out.println("Invalid input");
-			scanner.nextLine();
+			scan.nextLine();
 		}
 	}
 
+	/*
+	 * User Story 10- Remove a Jet
+	 * 
+	 * 
+	 */
 	public void removeJet(){
 		List<Jet> jets = af.getJets();
 
@@ -192,7 +249,7 @@ public class JetsApplication {
 
 		System.out.print("\nSelect the number of the jet to delete: ");
 		try{
-			int choice = scanner.nextInt();
+			int choice = scan.nextInt();
 			if(choice < jets.size() + 1 && choice > 0){
 				System.out.println("\n" + jets.get(choice - 1).getModel() + " deleted\n");
 				jets.remove(choice - 1);
@@ -202,7 +259,7 @@ public class JetsApplication {
 
 		} catch (InputMismatchException e){
 			System.out.println("Invalid input");
-			scanner.nextLine();
+			scan.nextLine();
 		}
 	}
 }

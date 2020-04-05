@@ -6,19 +6,19 @@ public abstract class Jet {
 	protected int range;
 	protected long price;
 
-	public Jet(String model, double speed, int range, long price) {
-		this.model = model;
-		this.speed = speed;
-		this.range = range;
-		this.price = price;
+	public Jet(String _model, double _speed, int _range, long _price) {
+		model = _model;
+		speed = _speed;
+		range = _range;
+		price = _price;
 	}
 
 	public void fly() {
-		if (this.range == 0 || this.speed == 0){
-			System.out.println("\tThis aircraft is down for maintenance");
+		if (range > 0 && speed > 0){
+			double flightTime = (double)(range / speed);
+			System.out.printf("  Max flight time: %.2f hours\n", flightTime);
 		} else{
-			double flightTime = this.range / this.speed;
-			System.out.printf("\tMax flight time: %.2f hours\n", flightTime);
+			System.out.println("00000 This aircraft cannot fly");
 		}
 	}
 
