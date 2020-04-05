@@ -11,8 +11,8 @@ import java.util.Scanner;
 public class JetsApplication {
 
 	//General Global variables
-	public AirField af; //We need an airfield object
-	public Scanner scan = new Scanner(System.in);// scan for the program
+	private AirField af; //We need an airfield object
+	private Scanner scan = new Scanner(System.in);// scan for the program
 	
 	/*
 	 * User Story number1, Class with a main
@@ -32,16 +32,20 @@ public class JetsApplication {
 	 * TODO make this more flexible instead of hard coding.
 	 */
 	public void launch() {
-		List<String[]> jetsInfo = parseJets();
+		List<String[]> jetsInfo = parseJets();//parse jets has the input
 
 		af.getJets().add(new FighterJet(jetsInfo.get(0)[0], Double.parseDouble(jetsInfo.get(0)[1]),
 			Integer.parseInt(jetsInfo.get(0)[2]), Long.parseLong(jetsInfo.get(0)[3])));
+		
 		af.getJets().add(new FighterJet(jetsInfo.get(1)[0], Double.parseDouble(jetsInfo.get(1)[1]),
 			Integer.parseInt(jetsInfo.get(1)[2]), Long.parseLong(jetsInfo.get(1)[3])));
+		
 		af.getJets().add(new CargoPlane(jetsInfo.get(2)[0], Double.parseDouble(jetsInfo.get(2)[1]),
 			Integer.parseInt(jetsInfo.get(2)[2]), Long.parseLong(jetsInfo.get(2)[3])));
+		
 		af.getJets().add(new CargoPlane(jetsInfo.get(3)[0], Double.parseDouble(jetsInfo.get(3)[1]),
 			Integer.parseInt(jetsInfo.get(3)[2]), Long.parseLong(jetsInfo.get(3)[3])));
+		
 		af.getJets().add(new JetImpl(jetsInfo.get(4)[0], Double.parseDouble(jetsInfo.get(4)[1]),
 			Integer.parseInt(jetsInfo.get(4)[2]), Long.parseLong(jetsInfo.get(4)[3])));
 
@@ -76,23 +80,32 @@ public class JetsApplication {
 
 	public void processChoice(char c){
 		switch(c){
-			case '1': listFleet();
+			case '1': 
+				listFleet();
 				break;
-			case '2': flyAll();
+			case '2': 
+				flyAll();
 				break;
-			case '3': viewFastestJet();
+			case '3': 
+				viewFastestJet();
 				break;
-			case '4': viewLongestRange();
+			case '4': 
+				viewLongestRange();
 				break;
-			case '5': loadAllCargo();
+			case '5': 
+				loadAllCargo();
 				break;
-			case '6': dogfight();
+			case '6': 
+				dogfight();
 				break;
-			case '7': addJet();
+			case '7': 
+				addJet();
 				break;
-			case '8': removeJet();
+			case '8': 
+				removeJet();
 				break;
-			case '9': scan.close();
+			case '9': 
+				scan.close();
 				System.out.println("Goodbye!");
 				break;
 			default:
@@ -246,6 +259,7 @@ public class JetsApplication {
 	public void removeJet(){
 		List<Jet> jets = af.getJets();
 
+		//List jets by number
 		for(int i = 0; i < jets.size(); i++){
 			System.out.println(i + 1 + ". " + jets.get(i));
 		}
@@ -253,6 +267,7 @@ public class JetsApplication {
 		System.out.print("\nSelect the number of the jet to delete: ");
 		try{
 			int choice = scan.nextInt();
+			//needs to match an index of an actual jet
 			if(choice < jets.size() + 1 && choice > 0){
 				System.out.println("\n" + jets.get(choice - 1).getModel() + " deleted\n");
 				jets.remove(choice - 1);

@@ -1,11 +1,16 @@
 package com.skilldistillery.jets;
 
+/*
+ * Abstract Class. Jet will never be a created option. This means the class fields need to be private
+ * or the planes will not be able to see their individual model info.
+ */
 public abstract class Jet {
 	protected String model;
 	protected double speed;
 	protected int range;
 	protected long price;
 
+	//Loaded constructor
 	public Jet(String _model, double _speed, int _range, long _price) {
 		model = _model;
 		speed = _speed;
@@ -13,6 +18,7 @@ public abstract class Jet {
 		price = _price;
 	}
 
+	//Every Jet should be able to fly based on range and speed
 	public void fly() {
 		if (range > 0 && speed > 0){
 			double flightTime = (double)(range / speed);
@@ -21,6 +27,10 @@ public abstract class Jet {
 			System.out.println("00000 This aircraft cannot fly");
 		}
 	}
+	
+	/*
+	 * Getters, Setters, and String Override
+	 */
 
 	public double getSpeedInMach() {
 		return 0;
