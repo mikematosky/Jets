@@ -1,7 +1,0 @@
-Fighter jet1,1,12,123
-Fighter jet2,2,23,234
-Cargo jet3,3,345,678
-Cargo jet4,4,45,5000
-jet5,5,56,56789
-Fighter jet6,6,67,9876
-Cargo jet7,7,78,0
