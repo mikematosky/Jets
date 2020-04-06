@@ -24,7 +24,7 @@ public abstract class Jet {
 			double flightTime = (double)(range / speed);
 			System.out.printf("  Max flight time: %.2f hours\n", flightTime);
 		} else{
-			System.out.println("00000 This aircraft cannot fly");
+			System.out.println("00000 This aircraft is grounded");
 		}
 	}
 	
