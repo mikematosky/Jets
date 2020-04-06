@@ -28,6 +28,23 @@ The user will have a 9 option, looping, menu:
  UAV           | Jet |               
 
 
+# Lessons Learned
++ Re-enforced FileIO in Java
++ Re-enforced OOP principles (APIE)
++ Re-enforced UML Design
++ Demonstrates protected fields
++ Demonstrates abstract class
++ Demonstrates interfaces
++ Demonstrates Java List of Objects
++ Try/Catch/Finally including with resources
++ Tracking and Closing project "issues" on github
++ Markdown Tables and more formatting
+
+
+# Technology Used
+* Eclipse
+* Terminal
+* Git
 
 
 
