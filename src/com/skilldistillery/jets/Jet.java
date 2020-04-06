@@ -71,6 +71,6 @@ public abstract class Jet {
 	@Override
 	public String toString() {
 		double mach= speed * 0.00130332;
-		return "Jet [model=" + model + ", speed=" + speed +"(mach "+mach+")"+", range=" + range + ", price=" + price + "]";
+		return "Jet model = " + model + ",   \t speed=" + speed +"mph (mach "+mach+")"+",   \t\t range=" + range + " miles,\t\t price= $" + price ;
 	}
 }

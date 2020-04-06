@@ -6,4 +6,4 @@ jet5,5,56,56789
 Fighter jet6,6,67,9876
 SuperGuppy jet7,7,1,1
 UAV jet8,6,10000,500
-PredatorDrone jet9,4,300,25
+PredatorDrone9,4,300,25
