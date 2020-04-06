@@ -35,7 +35,7 @@ The user will have a 9 option, looping, menu:
 + Demonstrates protected fields
 + Demonstrates abstract class
 + Demonstrates interfaces
-+ Demonstrates Java List of Objects
++ Java List: Iterating -- Adding -- Removing -- Initializing
 + Try/Catch/Finally including with resources
 + Tracking and Closing project "issues" on github
 + Markdown Tables and more formatting
