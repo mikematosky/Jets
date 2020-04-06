@@ -27,42 +27,43 @@ public class JetsApplication {
 	}
 
 	/*
-	 * User Story 4 Part 2: Populate the local jetsInfo
+	 * User Story 4 Part 2: Populate the local fleet
 	 * 
 	 * TODO make this more flexible instead of hard coding.
 	 */
 	public void launch() {
-		List<String[]> jetsInfo = parseJets();//parse jets has the input
+		List<String[]> fleet = parseJets();//parse jets has the input
 
-		for (int i= 0; i< jetsInfo.size(); i++ ) {
-			if(jetsInfo.get(i)[0].startsWith("Fighter")) {
-				af.getJets().add(new FighterJet(jetsInfo.get(0)[0], 
-						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(i)[2]), 
-						Long.parseLong(jetsInfo.get(i)[3])));
+		for (int i= 0; i< fleet.size(); i++ ) {
+			if(fleet.get(i)[0].startsWith("Fighter")) {
+				af.getJets().add(new FighterJet(fleet.get(0)[0], 
+						Double.parseDouble(fleet.get(i)[1]), Integer.parseInt(fleet.get(i)[2]), 
+						Long.parseLong(fleet.get(i)[3])));
 			}
-			else if (jetsInfo.get(i)[0].startsWith("Cargo")){
-				af.getJets().add(new CargoPlane(jetsInfo.get(i)[0], 
-						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
-						Long.parseLong(jetsInfo.get(i)[3])));
+			else if (fleet.get(i)[0].startsWith("Cargo")){
+				af.getJets().add(new CargoPlane(fleet.get(i)[0], 
+						Double.parseDouble(fleet.get(i)[1]), Integer.parseInt(fleet.get(2)[2]), 
+						Long.parseLong(fleet.get(i)[3])));
 			}
-			else if (jetsInfo.get(i)[0].startsWith("Predator")){
-				af.getJets().add(new PredatorDrone(jetsInfo.get(i)[0], 
-						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
-						Long.parseLong(jetsInfo.get(i)[3])));
+			else if (fleet.get(i)[0].startsWith("Predator")){
+				af.getJets().add(new PredatorDrone(fleet.get(i)[0], 
+						Double.parseDouble(fleet.get(i)[1]), Integer.parseInt(fleet.get(2)[2]), 
+						Long.parseLong(fleet.get(i)[3])));
 			}
-			else if (jetsInfo.get(i)[0].startsWith("Super")) {
-				af.getJets().add(new SuperGuppy(jetsInfo.get(i)[0], 
-						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
-						Long.parseLong(jetsInfo.get(i)[3])));
+			else if (fleet.get(i)[0].startsWith("Super")) {
+				af.getJets().add(new SuperGuppy(fleet.get(i)[0], 
+						Double.parseDouble(fleet.get(i)[1]), Integer.parseInt(fleet.get(2)[2]), 
+						Long.parseLong(fleet.get(i)[3])));
 			}
-			else if (jetsInfo.get(i)[0].startsWith("UAV")) {
-				af.getJets().add(new UAV(jetsInfo.get(i)[0], 
-						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
-						Long.parseLong(jetsInfo.get(i)[3])));
+			else if (fleet.get(i)[0].startsWith("UAV")) {
+				af.getJets().add(new UAV(fleet.get(i)[0], 
+						Double.parseDouble(fleet.get(i)[1]), Integer.parseInt(fleet.get(2)[2]), 
+						Long.parseLong(fleet.get(i)[3])));
+			}
 			else {
-				af.getJets().add(new JetImpl(jetsInfo.get(0)[0], 
-						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(i)[2]), 
-						Long.parseLong(jetsInfo.get(i)[3])));
+				af.getJets().add(new JetImpl(fleet.get(0)[0], 
+						Double.parseDouble(fleet.get(i)[1]), Integer.parseInt(fleet.get(i)[2]), 
+						Long.parseLong(fleet.get(i)[3])));
 			}
 		}
 		
@@ -226,7 +227,10 @@ public class JetsApplication {
 	 * 
 	 * User adds a jet to the AirField with loaded constructor
 	 * 
-	 * TODO dummyproof Parse strings for actual planes
+	 * TODO dummyproof Parse strings for actual planes. I'm actually
+	 * going to leave this because the project was stressful enough.
+	 * There is no requirement for making the user capable of adding a combat
+	 * or cargo jet.
 	 */
 	public void addJet(){
 		try {
@@ -238,9 +242,26 @@ public class JetsApplication {
 			int range = scan.nextInt();
 			System.out.print("Enter the price: ");
 			long price = scan.nextLong();
+			
+			if(model.startsWith("Fighter")) {
+				af.getJets().add(new FighterJet(model, speed, range, price));
+			}
+			else if (model.startsWith("Cargo")){
+				af.getJets().add(new CargoPlane(model, speed, range, price));
+			}
+			else if (model.startsWith("Predator")){
+				af.getJets().add(new PredatorDrone(model, speed, range, price));
+			}
+			else if (model.startsWith("SuperGuppy")) {
+				af.getJets().add(new SuperGuppy(model, speed, range, price));
+			}
+			else if (model.startsWith("UAV")) {
+				af.getJets().add(new UAV(model, speed, range, price));
+			}
+			else {//Anything random they put in for model defaults to a Jet class
+				af.getJets().add(new JetImpl(model, speed, range, price));
+			}
 
-			af.getJets().add(new JetImpl(model, speed, range, price));
-			System.out.println("\nJet added\n");
 		} catch (InputMismatchException e){
 			System.out.println("Invalid input");
 			scan.nextLine();
@@ -281,20 +302,20 @@ public class JetsApplication {
 	 */
 	public List<String[]> parseJets() {
 		//new list to hold String Arrays to input plane data into
-		List<String[]> jetsInfo = new ArrayList<>();
+		List<String[]> fleet = new ArrayList<>();
 		
 		try(BufferedReader reader = new BufferedReader(new FileReader("jets.txt"))){
 			String jet;
 			
 			while((jet = reader.readLine()) != null) {
 				String[] jetAttrs= jet.split(",");//separate by ',' create an array to hold data
-				jetsInfo.add(jetAttrs);//Add this array to the jetsInfo List
+				fleet.add(jetAttrs);//Add this array to the fleet List
 			}
 			
 		} catch (IOException e) {
 			System.err.println("Could not find file");//I hate seeing this
 		}
 		
-		return jetsInfo;
+		return fleet;
 	}
 }
