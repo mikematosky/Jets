@@ -45,6 +45,20 @@ public class JetsApplication {
 						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
 						Long.parseLong(jetsInfo.get(i)[3])));
 			}
+			else if (jetsInfo.get(i)[0].startsWith("Predator")){
+				af.getJets().add(new PredatorDrone(jetsInfo.get(i)[0], 
+						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
+						Long.parseLong(jetsInfo.get(i)[3])));
+			}
+			else if (jetsInfo.get(i)[0].startsWith("Super")) {
+				af.getJets().add(new SuperGuppy(jetsInfo.get(i)[0], 
+						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
+						Long.parseLong(jetsInfo.get(i)[3])));
+			}
+			else if (jetsInfo.get(i)[0].startsWith("UAV")) {
+				af.getJets().add(new UAV(jetsInfo.get(i)[0], 
+						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(2)[2]), 
+						Long.parseLong(jetsInfo.get(i)[3])));
 			else {
 				af.getJets().add(new JetImpl(jetsInfo.get(0)[0], 
 						Double.parseDouble(jetsInfo.get(i)[1]), Integer.parseInt(jetsInfo.get(i)[2]), 
